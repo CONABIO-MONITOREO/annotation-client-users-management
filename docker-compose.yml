@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    env_file:
+      - .env
+    restart: unless-stopped
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+  api:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "888:5000"
+    depends_on:
+      - db
+    command:  ["./wait-for-it.sh", "db:5432", "--", "flask", "--app", "api", "run", "--host=0.0.0.0"]
+
+  
