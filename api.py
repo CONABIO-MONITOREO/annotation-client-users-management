@@ -25,10 +25,15 @@ def login_ep():
     data = {'success': True, 'id_user': None, 'bearer_token': None}
     try:
         body = request.get_json()
-        user = login(body['email'], body['password'])
-        if user != None:
-            data['id_user'] = user[0]
+        user_data = login(body['email'], body['password'])
+        if user_data != None:
+            data['id_user'] = user_data[0][0]
+            data['role'] = user_data[0][1] 
             data['bearer_token'] = encrypt_bearer_token(data['id_user'])
+            data['cummulus'] = []
+            for ud_item in user_data:
+                if ud_item[2] != None:
+                    data['cummulus'].append(ud_item[2])
     except Exception as e:
         data['success'] = False
         print(str(e))

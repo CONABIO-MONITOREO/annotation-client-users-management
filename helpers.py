@@ -22,8 +22,8 @@ def login(email, password):
     data = None
     try:
         cur = conn.cursor()
-        cur.execute(f'SELECT id, "role" FROM "user" WHERE username=\'{email}\' and password=md5(\'{password}\')')
-        data = cur.fetchone()
+        cur.execute(f'SELECT u.id, "role", cm.cummulus_name FROM "user" as u LEFT JOIN cummulus_relation as cm ON u.id=cm.user_id WHERE username=\'{email}\' and password=md5(\'{password}\')')
+        data = cur.fetchall()
         cur.close()
     except Exception as e:
         print(str(e))
