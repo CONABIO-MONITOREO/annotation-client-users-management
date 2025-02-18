@@ -14,3 +14,5 @@ INSERT INTO "user"(username, "role", "password") VALUES ('mmunguia@conabio.gob.m
 INSERT INTO "user"(username, "role", "password") VALUES ('zs10011598@gmail.com', 'ENCARGADO', md5('Qwerty123'));
 
 CREATE TABLE cummulus_relation(id serial, cummulus_name varchar(10), user_id BIGINT);
+
+ALTER TABLE "user" ADD COLUMN is_active boolean DEFAULT true; 
